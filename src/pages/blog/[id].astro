@@ -1,0 +1,132 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import SocialSidebar from '../../components/SocialSidebar.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { id: '1' } },
+    { params: { id: '2' } },
+    { params: { id: '3' } },
+    { params: { id: '4' } },
+    { params: { id: '5' } },
+    { params: { id: '6' } },
+    { params: { id: '7' } },
+    { params: { id: '8' } },
+    { params: { id: '9' } },
+  ];
+}
+
+const { id } = Astro.params;
+
+const blogPosts: Record<string, any> = {
+  '1': {
+    title: 'Cloud Computing Revolution: Key Trends Shaping IT Strategies in 2024',
+    date: 'July 2024',
+    readTime: '5 min',
+    excerpt: 'Explore how cloud computing is transforming the way businesses approach IT infrastructure, from multi-cloud adoption to serverless computing.',
+    content: [
+      { heading: 'Multi-Cloud Adoption', text: 'Organizations are increasingly adopting multi-cloud strategies to avoid vendor lock-in and optimize costs. By distributing workloads across multiple cloud providers, businesses gain flexibility and resilience.' },
+      { heading: 'Serverless Computing', text: 'Serverless architectures are gaining traction as they allow developers to focus on code without managing infrastructure. This approach reduces operational overhead and enables automatic scaling.' },
+      { heading: 'Kubernetes and Container Orchestration', text: 'Container orchestration with Kubernetes has become the standard for deploying and managing containerized applications at scale.' },
+      { heading: 'Edge Computing Expansion', text: 'Edge computing is bringing data processing closer to the source, reducing latency and enabling real-time applications.' },
+      { heading: 'AI-driven Cloud Services', text: 'Cloud providers are integrating AI capabilities directly into their platforms, making it easier for businesses to leverage machine learning.' },
+      { heading: 'Cloud-Native Security', text: 'Security is being built into cloud-native applications from the ground up, with zero-trust architectures becoming the norm.' },
+    ],
+    tags: ['Cloud computing trends', 'Cloud technology innovations', 'Hybrid cloud solutions', 'Cloud security strategies'],
+  },
+  '2': {
+    title: 'Driving Business Efficiency with Virtual Cards: Applications and Advantages',
+    date: 'July 2024',
+    readTime: '7 min',
+    excerpt: 'Virtual cards are reshaping corporate finance. Learn how businesses are leveraging them for better control and security.',
+    content: [
+      { heading: 'What Are Virtual Cards?', text: 'Virtual cards are digital payment instruments that exist only in electronic form. They offer enhanced security and control over traditional physical cards.' },
+      { heading: 'Enhanced Security', text: 'With unique card numbers for each transaction, virtual cards significantly reduce the risk of fraud and unauthorized charges.' },
+      { heading: 'Spend Control', text: 'Businesses can set specific spending limits, expiration dates, and merchant restrictions on virtual cards.' },
+      { heading: 'Streamlined Reconciliation', text: 'Virtual cards simplify expense tracking and reconciliation by providing detailed transaction data automatically.' },
+    ],
+    tags: ['Virtual cards', 'Corporate finance', 'Payment innovation', 'Fintech'],
+  },
+};
+
+const post = blogPosts[id] || blogPosts['1'];
+---
+
+<Layout title={`${post.title} — Glickages Blog`}>
+  <Header />
+  <SocialSidebar />
+  <main>
+    <!-- Hero -->
+    <section class="relative pt-32 pb-16 lg:pt-40 lg:pb-20">
+      <div class="container-custom">
+        <div class="max-w-3xl animate-on-scroll">
+          <div class="flex items-center gap-2 text-sm text-[var(--text-muted)] mb-4">
+            <a href="/blog" class="hover:text-[var(--accent-cyan)] transition-colors">Blogs</a>
+            <span>/</span>
+            <span class="text-[var(--accent-cyan)]">Blog Detail</span>
+          </div>
+          <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+            {post.title}
+          </h1>
+          <div class="flex items-center gap-3 text-sm text-[var(--text-muted)]">
+            <span>Blog</span>
+            <span>•</span>
+            <span>{post.readTime} reading</span>
+            <span>•</span>
+            <span>{post.date}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <section class="pb-16 lg:pb-20">
+      <div class="container-custom">
+        <div class="max-w-3xl">
+          <!-- Hero Image -->
+          <div class="aspect-[21/9] rounded-[20px] bg-gradient-to-br from-[var(--bg-deep)] to-[var(--bg-blue)] flex items-center justify-center mb-10 animate-on-scroll">
+            <span class="text-[var(--accent-cyan)] text-6xl font-bold">{post.title.charAt(0)}</span>
+          </div>
+
+          <!-- Excerpt -->
+          <p class="text-white text-lg leading-relaxed mb-10 animate-on-scroll">
+            {post.excerpt}
+          </p>
+
+          <!-- Body -->
+          <div class="space-y-8">
+            {post.content.map((section: any, index: number) => (
+              <div class={`animate-on-scroll delay-${(index + 1) * 100}`}>
+                <h2 class="text-xl md:text-2xl font-bold text-white mb-3">{section.heading}</h2>
+                <p class="text-[var(--text-muted)] leading-relaxed">{section.text}</p>
+              </div>
+            ))}
+          </div>
+
+          <!-- Tags -->
+          <div class="mt-12 pt-8 border-t border-white/5 animate-on-scroll">
+            <p class="text-white text-sm font-medium mb-3">Tags</p>
+            <div class="flex flex-wrap gap-2">
+              {post.tags.map((tag: string) => (
+                <span class="px-3 py-1 rounded-full bg-white/5 text-[var(--text-muted)] text-xs border border-white/5">{tag}</span>
+              ))}
+            </div>
+          </div>
+
+          <!-- More Blogs Link -->
+          <div class="mt-12 animate-on-scroll">
+            <a 
+              href="/blog" 
+              class="inline-flex items-center gap-2 text-[var(--accent-cyan)] font-medium hover:text-[var(--accent-bright)] transition-colors group"
+            >
+              ← Back to all blogs
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

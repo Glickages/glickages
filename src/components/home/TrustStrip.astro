@@ -1,0 +1,37 @@
+---
+const differentiators = [
+  {
+    icon: '⚡',
+    title: 'Fast & Functional',
+    description: 'We build for speed, stability, and real-world performance. Not just good looks.',
+  },
+  {
+    icon: '🤝',
+    title: 'You Stay in the Loop',
+    description: 'No black boxes. You know what\'s being built, when, and why — every step of the way.',
+  },
+  {
+    icon: '🌍',
+    title: 'We Understand Your Market',
+    description: 'We\'re builders who get both the Nigerian digital landscape and global standards. Your product is built to thrive in both.',
+  },
+];
+---
+
+<section class="py-16 lg:py-20 border-b border-white/5">
+  <div class="container-custom">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+      {differentiators.map((item, index) => (
+        <div class={`animate-on-scroll delay-${(index + 1) * 100}`}>
+          <div class="flex items-start gap-4">
+            <span class="text-2xl">{item.icon}</span>
+            <div>
+              <h3 class="text-white font-semibold text-base mb-2">{item.title}</h3>
+              <p class="text-[var(--text-muted)] text-sm leading-relaxed">{item.description}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,106 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "Glickages — Building the web, one great product at a time",
+  description = "Glickages designs, develops, and delivers digital products that actually work for your business. From web apps to full-stack platforms."
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <slot />
+    <script>
+      // Intersection Observer for scroll animations
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --bg-primary: #000000;
+    --bg-dark: #0f0f0f;
+    --bg-deep: #032043;
+    --bg-blue: #00377b;
+    --accent-cyan: #1c7ed6;
+    --accent-bright: #44c8f5;
+    --text-primary: #ffffff;
+    --text-muted: #b2b2b2;
+    --text-dim: #666666;
+    --card-bg: rgba(58, 77, 102, 0.43);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  ::selection { background-color: var(--accent-cyan); color: var(--text-primary); }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg-dark); }
+  ::-webkit-scrollbar-thumb { background: var(--accent-cyan); border-radius: 4px; }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .animate-bounce-slow { animation: bounce 2s ease-in-out infinite; }
+
+  .section-padding { padding: 80px 0; }
+  @media (min-width: 768px) { .section-padding { padding: 100px 0; } }
+  @media (min-width: 1024px) { .section-padding { padding: 120px 0; } }
+
+  .container-custom { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  @media (min-width: 768px) { .container-custom { padding: 0 40px; } }
+  @media (min-width: 1024px) { .container-custom { padding: 0 60px; } }
+
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+  .animate-on-scroll.delay-100 { transition-delay: 0.1s; }
+  .animate-on-scroll.delay-200 { transition-delay: 0.2s; }
+  .animate-on-scroll.delay-300 { transition-delay: 0.3s; }
+  .animate-on-scroll.delay-400 { transition-delay: 0.4s; }
+</style>

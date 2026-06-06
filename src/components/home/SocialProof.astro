@@ -1,0 +1,39 @@
+---
+const testimonials = [
+  {
+    quote: "Glickages delivered our platform on time, and it looked better than we imagined. The team was always reachable and made the whole process easy.",
+    name: 'Client Name',
+    role: 'Founder',
+    company: 'Startup Name',
+  },
+];
+---
+
+<section class="section-padding bg-[var(--bg-dark)]">
+  <div class="container-custom">
+    <div class="text-center mb-12 lg:mb-16 animate-on-scroll">
+      <p class="text-[var(--accent-cyan)] text-sm font-medium uppercase tracking-widest mb-3">Testimonials</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-white">
+        Businesses That Trusted Us to <span class="text-[var(--accent-cyan)]">Build</span>
+      </h2>
+    </div>
+
+    <div class="max-w-3xl mx-auto animate-on-scroll delay-100">
+      {testimonials.map(t => (
+        <div class="relative p-8 lg:p-12 rounded-[20px] bg-white/[0.03] border border-white/5">
+          <div class="text-[var(--accent-cyan)] text-4xl mb-6">"</div>
+          <p class="text-white text-lg lg:text-xl leading-relaxed mb-8">{t.quote}</p>
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-[var(--accent-cyan)]/20 flex items-center justify-center text-[var(--accent-cyan)] font-semibold">
+              {t.name.charAt(0)}
+            </div>
+            <div>
+              <p class="text-white font-medium">{t.name}</p>
+              <p class="text-[var(--text-muted)] text-sm">{t.role}, {t.company}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
