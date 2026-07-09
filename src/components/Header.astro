@@ -59,7 +59,7 @@ const navLinks = [
 <!-- Mobile Menu Overlay — placed outside header for proper viewport coverage -->
 <div id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-black/97 backdrop-blur-xl z-[55] opacity-0 pointer-events-none transition-all duration-300 lg:hidden overflow-y-auto" role="dialog" aria-modal="true">
   <div class="flex flex-col items-center justify-center min-h-full gap-8 py-24">
-    {navLinks.map((link, index) => (
+    {navLinks.map((link) => (
       <a 
         href={link.href} 
         class="text-2xl md:text-3xl text-white/80 hover:text-[var(--accent-cyan)] transition-all duration-300 mobile-link"
@@ -74,12 +74,9 @@ const navLinks = [
   const header = document.getElementById('main-header');
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
-  const mobileLinks = document.querySelectorAll('.mobile-link');
+  const mobileLinks = document.querySelectorAll<HTMLAnchorElement>('.mobile-link');
   const hamburgerIcon = document.getElementById('hamburger-icon');
   const closeIcon = document.getElementById('close-icon');
-  const hamburgerLine1 = document.querySelector('.hamburger-line-1');
-  const hamburgerLine2 = document.querySelector('.hamburger-line-2');
-  const hamburgerLine3 = document.querySelector('.hamburger-line-3');
   let isMenuOpen = false;
 
   function openMenu() {
@@ -173,3 +170,4 @@ const navLinks = [
     }
   });
 </script>
+

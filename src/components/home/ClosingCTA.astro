@@ -1,4 +1,5 @@
 ---
+import { contactLinks } from '../../lib/site';
 ---
 
 <section id="contact" class="section-padding">
@@ -12,10 +13,10 @@
           Got a project in mind?
         </h2>
         <p class="text-[var(--text-muted)] text-base md:text-lg mb-8 leading-relaxed">
-          Whether it's a quick question or a full brief — let's talk about it. We'll figure out the best way to help, no pressure.
+          Whether it's a quick question or a full brief - let's talk about it. We'll figure out the best way to help, no pressure.
         </p>
         <a 
-          href="mailto:hello@glickages.com" 
+          href={contactLinks.email} 
           class="inline-flex items-center gap-2 px-8 py-4 bg-[var(--accent-cyan)] text-white rounded-full font-medium hover:bg-[var(--accent-bright)] transition-all duration-300 group"
         >
           Start a Conversation

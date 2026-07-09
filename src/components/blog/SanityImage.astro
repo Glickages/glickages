@@ -1,0 +1,45 @@
+---
+import { urlFor } from '../../lib/sanity/image';
+import type { SanityImageSource } from '../../lib/sanity/types';
+
+interface Props {
+  image?: SanityImageSource;
+  alt: string;
+  width?: number;
+  sizes?: string;
+  className?: string;
+  loading?: 'eager' | 'lazy';
+}
+
+const {
+  image,
+  alt,
+  width = 1600,
+  sizes = '100vw',
+  className = '',
+  loading = 'lazy',
+} = Astro.props;
+
+const dimensions = image?.asset?.metadata?.dimensions;
+const src = image ? urlFor(image).width(width).auto('format').fit('max').url() : null;
+const placeholder = image?.asset?.metadata?.lqip;
+---
+
+{
+  src ? (
+    <img
+      src={src}
+      alt={alt}
+      width={dimensions?.width}
+      height={dimensions?.height}
+      sizes={sizes}
+      loading={loading}
+      class={className}
+      style={placeholder ? `background-image:url(${placeholder});background-size:cover;background-position:center;` : undefined}
+    />
+  ) : (
+    <div class={`flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--bg-deep)] to-[var(--bg-blue)] ${className}`}>
+      <span class="text-5xl font-bold text-[var(--accent-cyan)]">{alt.charAt(0)}</span>
+    </div>
+  )
+}

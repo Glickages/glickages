@@ -1,176 +1,149 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
+import SanityImage from '../../components/blog/SanityImage.astro';
 import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
 import SocialSidebar from '../../components/SocialSidebar.astro';
+import Layout from '../../layouts/Layout.astro';
+import { getBlogIndexPosts } from '../../lib/sanity/blog';
+import { isSanityConfigured } from '../../lib/sanity/config';
 
-const blogs = [
-  {
-    id: 1,
-    title: 'Cloud Computing Revolution: Key Trends Shaping IT Strategies in 2024',
-    date: 'July 2024',
-    readTime: '5 min',
-    excerpt: 'Explore how cloud computing is transforming the way businesses approach IT infrastructure, from multi-cloud adoption to serverless computing.',
-    featured: true,
-  },
-  {
-    id: 2,
-    title: 'Driving Business Efficiency with Virtual Cards: Applications and Advantages',
-    date: 'July 2024',
-    readTime: '7 min',
-    excerpt: 'Virtual cards are reshaping corporate finance. Learn how businesses are leveraging them for better control and security.',
-    featured: true,
-  },
-  {
-    id: 3,
-    title: 'Driving Digital Transformation: Key Strategies for Success in 2024',
-    date: 'June 2024',
-    readTime: '4 min',
-    excerpt: 'Digital transformation is no longer optional. Here are the strategies that actually work for modern businesses.',
-    featured: true,
-  },
-  {
-    id: 4,
-    title: 'Elevating Customer Experience in Travel: Strategies for Success in 2024',
-    date: 'June 2024',
-    readTime: '4 min',
-    excerpt: 'The travel industry is evolving rapidly. Discover the technologies and approaches driving better customer experiences.',
-    featured: true,
-  },
-  {
-    id: 5,
-    title: 'Embracing the Future: Key Trends in IT for 2024 and Beyond',
-    date: 'May 2024',
-    readTime: '8 min',
-    excerpt: 'From AI integration to edge computing, here are the IT trends that will define the next decade.',
-    featured: false,
-  },
-  {
-    id: 6,
-    title: 'Empowering Business with IoT: Trends and Innovations in 2024',
-    date: 'May 2024',
-    readTime: '3 min',
-    excerpt: 'The Internet of Things is maturing. See how businesses are using connected devices to drive efficiency.',
-    featured: false,
-  },
-  {
-    id: 7,
-    title: 'Enhancing Business Efficiency with Virtual Cards: Benefits and Best Practices',
-    date: 'April 2024',
-    readTime: '4 min',
-    excerpt: 'A deep dive into virtual card implementation and the best practices for maximum ROI.',
-    featured: false,
-  },
-  {
-    id: 8,
-    title: 'Evolving E-commerce Strategies: Navigating the Future of Online Retail in 2024',
-    date: 'April 2024',
-    readTime: '5 min',
-    excerpt: 'Online retail is more competitive than ever. Learn the strategies that help brands stand out.',
-    featured: false,
-  },
-  {
-    id: 9,
-    title: 'Fortifying Cyber Defenses: Emerging Trends in Cybersecurity for 2024',
-    date: 'March 2024',
-    readTime: '4 min',
-    excerpt: 'Cyber threats are evolving. Here are the defense strategies every business should consider.',
-    featured: false,
-  },
-];
+const blogs = await getBlogIndexPosts();
+const featuredBlogs = blogs.filter((blog) => blog.featured);
+const moreBlogs = blogs.filter((blog) => !blog.featured);
 
-const featuredBlogs = blogs.filter(b => b.featured);
-const moreBlogs = blogs.filter(b => !b.featured);
+function formatPublishedAt(date: string) {
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+  });
+}
+
+function estimateReadTime(excerpt: string) {
+  return Math.max(1, Math.ceil(excerpt.split(/\s+/).filter(Boolean).length / 45));
+}
 ---
 
 <Layout title="Blog — Glickages">
   <Header />
   <SocialSidebar />
   <main>
-    <!-- Hero -->
-    <section class="relative pt-32 pb-16 lg:pt-40 lg:pb-20">
+    <section class="relative pb-16 pt-32 lg:pb-20 lg:pt-40">
       <div class="container-custom">
         <div class="animate-on-scroll">
-          <p class="text-[var(--accent-cyan)] text-sm font-medium uppercase tracking-widest mb-3">Our Blogs</p>
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+          <p class="mb-3 text-sm font-medium uppercase tracking-widest text-[var(--accent-cyan)]">Our Blogs</p>
+          <h1 class="mb-6 text-4xl font-bold text-white md:text-5xl lg:text-6xl">
             Updates From <span class="text-[var(--accent-cyan)]">Insights</span>
           </h1>
-          <p class="text-[var(--text-muted)] text-base md:text-lg max-w-2xl leading-relaxed">
+          <p class="max-w-2xl text-base leading-relaxed text-[var(--text-muted)] md:text-lg">
             We cover the latest in IT, fintech, software development, and digital marketing — insights to help your business stay ahead.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Featured Blogs -->
-    <section class="section-padding border-t border-white/5">
-      <div class="container-custom">
-        <div class="mb-10 animate-on-scroll">
-          <h2 class="text-xl md:text-2xl font-bold text-white">Featured Blogs</h2>
-        </div>
+    {
+      blogs.length > 0 ? (
+        <>
+          {featuredBlogs.length > 0 && (
+            <section class="section-padding border-t border-white/5">
+              <div class="container-custom">
+                <div class="mb-10 animate-on-scroll">
+                  <h2 class="text-xl font-bold text-white md:text-2xl">Featured Blogs</h2>
+                </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {featuredBlogs.map((blog, index) => (
-            <a 
-              href={`/blog/${blog.id}`}
-              class="group relative rounded-[20px] overflow-hidden bg-white/[0.03] border border-white/5 hover:border-[var(--accent-cyan)]/30 transition-all duration-500 animate-on-scroll"
-            >
-              <div class="aspect-[16/9] bg-gradient-to-br from-[var(--bg-deep)] to-[var(--bg-blue)] flex items-center justify-center">
-                <div class="text-center p-8">
-                  <span class="text-[var(--accent-cyan)] text-5xl font-bold">{blog.title.charAt(0)}</span>
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  {featuredBlogs.map((blog) => (
+                    <a
+                      href={`/blog/${blog.slug}`}
+                      class="group relative overflow-hidden rounded-[20px] border border-white/5 bg-white/[0.03] transition-all duration-500 hover:border-[var(--accent-cyan)]/30 animate-on-scroll"
+                    >
+                      <div class="aspect-[16/9] overflow-hidden">
+                        <SanityImage
+                          image={blog.coverImage}
+                          alt={blog.coverImage?.alt ?? blog.title}
+                          width={1400}
+                          sizes="(min-width: 768px) 50vw, 100vw"
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        />
+                      </div>
+                      <div class="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-transparent"></div>
+                      <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="mb-3 flex items-center gap-3">
+                          <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                            {formatPublishedAt(blog.publishedAt)}
+                          </span>
+                          <span class="text-xs text-white/60">Blog • {estimateReadTime(blog.excerpt)} min read</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white transition-colors group-hover:text-[var(--accent-cyan)]">
+                          {blog.title}
+                        </h3>
+                      </div>
+                    </a>
+                  ))}
                 </div>
               </div>
-              <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-              <div class="absolute bottom-0 left-0 right-0 p-6">
-                <div class="flex items-center gap-3 mb-3">
-                  <span class="px-3 py-1 rounded-full bg-white/10 text-white text-xs font-medium backdrop-blur-sm">{blog.date}</span>
-                  <span class="text-white/60 text-xs">Blog • {blog.readTime} reading</span>
-                </div>
-                <h3 class="text-white font-semibold text-lg group-hover:text-[var(--accent-cyan)] transition-colors">{blog.title}</h3>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
+            </section>
+          )}
 
-    <!-- More Blogs -->
-    <section class="section-padding bg-[var(--bg-dark)]">
-      <div class="container-custom">
-        <div class="mb-10 animate-on-scroll">
-          <h2 class="text-xl md:text-2xl font-bold text-white">More Blogs</h2>
-        </div>
+          {moreBlogs.length > 0 && (
+            <section class="section-padding bg-[var(--bg-dark)]">
+              <div class="container-custom">
+                <div class="mb-10 animate-on-scroll">
+                  <h2 class="text-xl font-bold text-white md:text-2xl">
+                    {featuredBlogs.length > 0 ? 'More Blogs' : 'Latest Blogs'}
+                  </h2>
+                </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {moreBlogs.map((blog, index) => (
-            <a 
-              href={`/blog/${blog.id}`}
-              class="group rounded-[20px] overflow-hidden bg-white/[0.03] border border-white/5 hover:border-[var(--accent-cyan)]/30 transition-all duration-500 animate-on-scroll"
-            >
-              <div class="aspect-[16/9] bg-gradient-to-br from-[var(--bg-deep)] to-[var(--bg-blue)] flex items-center justify-center">
-                <div class="text-center p-6">
-                  <span class="text-[var(--accent-cyan)] text-4xl font-bold">{blog.title.charAt(0)}</span>
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {moreBlogs.map((blog) => (
+                    <a
+                      href={`/blog/${blog.slug}`}
+                      class="group overflow-hidden rounded-[20px] border border-white/5 bg-white/[0.03] transition-all duration-500 hover:border-[var(--accent-cyan)]/30 animate-on-scroll"
+                    >
+                      <div class="aspect-[16/9] overflow-hidden">
+                        <SanityImage
+                          image={blog.coverImage}
+                          alt={blog.coverImage?.alt ?? blog.title}
+                          width={900}
+                          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                        />
+                      </div>
+                      <div class="p-6">
+                        <div class="mb-3 flex items-center gap-3">
+                          <span class="text-xs font-medium text-[var(--accent-cyan)]">{formatPublishedAt(blog.publishedAt)}</span>
+                          <span class="text-xs text-[var(--text-dim)]">• {estimateReadTime(blog.excerpt)} min read</span>
+                        </div>
+                        <h3 class="mb-2 text-base font-semibold text-white transition-colors group-hover:text-[var(--accent-cyan)]">
+                          {blog.title}
+                        </h3>
+                        <p class="text-sm text-[var(--text-muted)]">{blog.excerpt}</p>
+                      </div>
+                    </a>
+                  ))}
                 </div>
               </div>
-              <div class="p-6">
-                <div class="flex items-center gap-3 mb-3">
-                  <span class="text-[var(--accent-cyan)] text-xs font-medium">{blog.date}</span>
-                  <span class="text-[var(--text-dim)] text-xs">• {blog.readTime} reading</span>
-                </div>
-                <h3 class="text-white font-semibold text-base group-hover:text-[var(--accent-cyan)] transition-colors mb-2">{blog.title}</h3>
-                <p class="text-[var(--text-muted)] text-sm line-clamp-2">{blog.excerpt}</p>
-              </div>
-            </a>
-          ))}
-        </div>
-
-        <div class="mt-12 text-center animate-on-scroll">
-          <button class="px-6 py-3 rounded-full border border-[var(--accent-cyan)] text-[var(--accent-cyan)] hover:bg-[var(--accent-cyan)] hover:text-white transition-all duration-300 text-sm font-medium">
-            View all Insights →
-          </button>
-        </div>
-      </div>
-    </section>
+            </section>
+          )}
+        </>
+      ) : (
+        <section class="section-padding border-t border-white/5">
+          <div class="container-custom">
+            <div class="mx-auto max-w-3xl overflow-hidden rounded-[28px] border border-white/8 bg-[radial-gradient(circle_at_top,rgba(68,200,245,0.18),transparent_42%),linear-gradient(135deg,rgba(3,32,67,0.95),rgba(15,15,15,0.98))] p-8 text-center md:p-12 animate-on-scroll">
+              <p class="mb-3 text-sm font-medium uppercase tracking-[0.25em] text-[var(--accent-bright)]">Insights Coming Soon</p>
+              <h2 class="mb-4 text-3xl font-bold text-white md:text-4xl">
+                The blog is now powered by our CMS and ready for fresh stories.
+              </h2>
+              <p class="mx-auto max-w-2xl text-base leading-relaxed text-[var(--text-muted)] md:text-lg">
+                {isSanityConfigured
+                  ? 'We are preparing the first wave of articles. Check back soon for practical notes on product strategy, engineering, and growth.'
+                  : 'The editorial pipeline is in place. Add your Sanity project credentials and publish your first post to bring this space to life.'}
+              </p>
+            </div>
+          </div>
+        </section>
+      )
+    }
   </main>
   <Footer />
 </Layout>

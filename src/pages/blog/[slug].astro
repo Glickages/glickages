@@ -1,0 +1,179 @@
+---
+import { PortableText } from 'astro-portabletext';
+
+import SanityImage from '../../components/blog/SanityImage.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import SocialSidebar from '../../components/SocialSidebar.astro';
+import Layout from '../../layouts/Layout.astro';
+import { getBlogPostBySlug, getBlogPostSlugs } from '../../lib/sanity/blog';
+
+export async function getStaticPaths() {
+  const posts = await getBlogPostSlugs();
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  throw new Error('Missing blog slug');
+}
+
+const post = await getBlogPostBySlug(slug);
+
+if (!post) {
+  throw new Error(`Missing blog post for slug: ${slug}`);
+}
+
+const description = post.seo?.description ?? post.excerpt;
+const pageTitle = `${post.seo?.title ?? post.title} — Glickages Blog`;
+const publishedLabel = new Date(post.publishedAt).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+function getReadingTime(body: unknown[]) {
+  const words = body
+    .flatMap((block) => {
+      if (!block || typeof block !== 'object' || !('children' in block)) {
+        return [];
+      }
+
+      const children = (block as { children?: Array<{ text?: string }> }).children ?? [];
+      return children.map((child) => child.text ?? '');
+    })
+    .join(' ')
+    .split(/\s+/)
+    .filter(Boolean).length;
+
+  return Math.max(1, Math.ceil(words / 220));
+}
+
+const readingTime = getReadingTime(post.body);
+---
+
+<Layout title={pageTitle} description={description}>
+  <Header />
+  <SocialSidebar />
+  <main>
+    <section class="relative pb-16 pt-32 lg:pb-20 lg:pt-40">
+      <div class="container-custom">
+        <div class="max-w-3xl animate-on-scroll">
+          <div class="mb-4 flex items-center gap-2 text-sm text-[var(--text-muted)]">
+            <a href="/blog" class="transition-colors hover:text-[var(--accent-cyan)]">Blogs</a>
+            <span>/</span>
+            <span class="text-[var(--accent-cyan)]">Article</span>
+          </div>
+          <h1 class="mb-4 text-3xl font-bold text-white md:text-4xl lg:text-5xl">
+            {post.title}
+          </h1>
+          <div class="flex flex-wrap items-center gap-3 text-sm text-[var(--text-muted)]">
+            <span>Blog</span>
+            <span>•</span>
+            <span>{readingTime} min read</span>
+            <span>•</span>
+            <span>{publishedLabel}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-16 lg:pb-20">
+      <div class="container-custom">
+        <div class="max-w-3xl">
+          <div class="mb-10 aspect-[21/9] overflow-hidden rounded-[20px] animate-on-scroll">
+            <SanityImage
+              image={post.coverImage}
+              alt={post.coverImage?.alt ?? post.title}
+              width={1800}
+              sizes="(min-width: 1024px) 960px, 100vw"
+              loading="eager"
+              className="h-full w-full object-cover"
+            />
+          </div>
+
+          <p class="mb-10 text-lg leading-relaxed text-white animate-on-scroll">
+            {post.excerpt}
+          </p>
+
+          <article class="blog-prose animate-on-scroll">
+            <PortableText value={post.body} />
+          </article>
+
+          <div class="mt-12 animate-on-scroll">
+            <a
+              href="/blog"
+              class="inline-flex items-center gap-2 font-medium text-[var(--accent-cyan)] transition-colors hover:text-[var(--accent-bright)]"
+            >
+              ← Back to all blogs
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .blog-prose {
+    color: var(--text-muted);
+  }
+
+  .blog-prose :global(h2),
+  .blog-prose :global(h3) {
+    margin: 2.5rem 0 0.9rem;
+    color: var(--text-primary);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .blog-prose :global(h2) {
+    font-size: clamp(1.45rem, 3vw, 1.9rem);
+  }
+
+  .blog-prose :global(h3) {
+    font-size: clamp(1.2rem, 2.4vw, 1.45rem);
+  }
+
+  .blog-prose :global(p),
+  .blog-prose :global(blockquote),
+  .blog-prose :global(ul),
+  .blog-prose :global(ol) {
+    margin: 0 0 1.15rem;
+    line-height: 1.9;
+  }
+
+  .blog-prose :global(ul),
+  .blog-prose :global(ol) {
+    padding-left: 1.3rem;
+  }
+
+  .blog-prose :global(li + li) {
+    margin-top: 0.55rem;
+  }
+
+  .blog-prose :global(a) {
+    color: var(--accent-bright);
+    text-decoration: underline;
+    text-decoration-color: rgba(68, 200, 245, 0.45);
+    text-underline-offset: 0.2em;
+  }
+
+  .blog-prose :global(blockquote) {
+    border-left: 3px solid rgba(28, 126, 214, 0.45);
+    padding-left: 1rem;
+    color: #d5e8ff;
+  }
+
+  .blog-prose :global(code) {
+    border-radius: 0.4rem;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.15rem 0.4rem;
+    font-size: 0.95em;
+  }
+</style>
