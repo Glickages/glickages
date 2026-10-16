@@ -14,7 +14,7 @@ const quickLinks = [
 ---
 
 <footer class="bg-[var(--bg-dark)] border-t border-white/5">
-  <div class="container-custom py-16 lg:py-20">
+  <div class="container-custom footer-content">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
       <!-- Brand & Newsletter -->
       <div class="lg:col-span-1">
@@ -286,3 +286,15 @@ const quickLinks = [
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 </script>
+
+<style>
+  .footer-content {
+    padding-block: 4rem;
+  }
+
+  @media (min-width: 1024px) {
+    .footer-content {
+      padding-block: 5rem;
+    }
+  }
+</style>
