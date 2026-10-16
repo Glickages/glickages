@@ -16,5 +16,5 @@ export default defineConfig({
       useCdn: false,
     }),
   ],
-  site: process.env.PUBLIC_SITE_URL ?? 'https://glickages.com',
+  site: process.env.PUBLIC_SITE_URL ?? 'https://glickages.pages.dev',
 });

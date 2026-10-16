@@ -1,3 +1,5 @@
+import type { PortableTextBlock } from 'sanity';
+
 export interface SanityImageAssetMetadata {
   lqip?: string;
   dimensions?: {
@@ -26,7 +28,7 @@ export interface BlogPostListItem {
 }
 
 export interface BlogPost extends BlogPostListItem {
-  body: unknown[];
+  body: PortableTextBlock[];
   seo?: {
     title?: string;
     description?: string;

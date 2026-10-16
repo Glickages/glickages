@@ -1,12 +1,16 @@
 ---
+import { siteConfig } from '../lib/site';
+
 export interface Props {
   title?: string;
   description?: string;
+  canonicalUrl?: string;
 }
 
-const { 
-  title = "Glickages — Building the web, one great product at a time",
-  description = "Glickages designs, develops, and delivers digital products that actually work for your business. From web apps to full-stack platforms."
+const {
+  title = "Glickages — Custom Websites for Businesses & Organisations",
+  description = "Glickages builds distinctive custom websites for businesses and organisations — landing pages, informational websites, blogs, and content management.",
+  canonicalUrl = new URL(Astro.url.pathname, siteConfig.siteUrl).href
 } = Astro.props;
 ---
 
@@ -18,6 +22,7 @@ const {
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

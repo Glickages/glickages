@@ -5,148 +5,115 @@ import Footer from '../components/Footer.astro';
 import SocialSidebar from '../components/SocialSidebar.astro';
 import { contactLinks } from '../lib/site';
 
-const filters = ['All', 'Web Apps', 'Landing Pages', 'Full-Stack', 'AI'];
+const filters = ['All', 'Business Websites', 'Nonprofit Websites', 'Blogs & CMS', 'Portfolios'];
 
-const featuredProjects = [
+const projects = [
   {
     id: 1,
-    name: 'FendAm Academy',
-    category: 'Full-Stack App',
-    subCategory: 'EdTech',
-    liveLink: null,
-    oneLiner: 'A fully-featured learning management system — engineered to run lean, deploy automatically, and handle real students from day one.',
-    narrative: 'FendAm Academy needed more than a course listing page. They needed a real platform: student and instructor roles, structured content delivery, a KYC review flow, and file management — all running on a constrained infrastructure budget. We built the full stack from scratch. The backend runs on a memory-optimized Oracle Cloud VPS, tuned to stay stable under real load without ballooning server costs. Deployments are fully automated via a CI/CD pipeline — push to main, and the platform updates itself: builds, migrations, and service restarts included. The frontend lives on Vercel, keeping the interface fast and globally distributed.',
+    name: 'Love Fest Foundation',
+    category: 'Nonprofit Websites',
+    subCategory: 'Mission & Outreach',
+    url: 'https://lff-website.lovefestfoundation.workers.dev/',
+    displayUrl: 'lff-website.lovefestfoundation.workers.dev',
+    oneLiner: 'Nonprofit mission and community outreach website with programmes information and get-involved paths.',
+    image: '/projects/lovefest.png',
     handled: [
-      'Full-stack architecture (frontend + backend + database)',
-      'Automated CI/CD deployment with GitHub Actions',
-      'Cloud VPS configuration, Nginx reverse proxy, SSL/TLS',
-      'Memory optimization (20% idle RAM reduction on 1GB server)',
-      'Database design, Prisma ORM, PostgreSQL',
+      'Nonprofit mission and outreach',
+      'Community programmes overview',
+      'Get-involved and support paths',
+      'Responsive design',
     ],
-    techStack: ['NestJS', 'Next.js', 'PostgreSQL', 'Prisma', 'Oracle Cloud (OCI)', 'GitHub Actions', 'Nginx', 'CI/CD'],
-    tags: ['Full-Stack'],
+    tags: ['Nonprofit Websites'],
   },
   {
     id: 2,
-    name: 'Cyberdicts',
-    category: 'Web App',
-    subCategory: 'Community Platform',
-    liveLink: 'https://cyberdicts.vercel.app',
-    oneLiner: 'Gamified cybersecurity certification prep — because studying for a cert shouldn\'t feel like punishment.',
-    narrative: 'Cybersecurity certification candidates have a retention problem. They study alone, lose momentum, and burn out before exam day. Cyberdicts was built to change that dynamic. The platform turns prep into a social, habit-forming experience: daily micro-tasks, study streaks, competitive leagues, and collaborative study rooms give candidates the consistency and accountability that solo studying rarely provides. Every feature was designed around one goal — getting candidates to show up every day.',
+    name: 'ICC Studios',
+    category: 'Business Websites',
+    subCategory: 'Photography & Creative Services',
+    url: 'https://icc-delta.vercel.app/',
+    displayUrl: 'icc-delta.vercel.app',
+    oneLiner: 'Photography portfolio and services website presenting studio work and direct contact routes.',
+    image: '/projects/icc.png',
     handled: [
-      'Full-stack product design and development',
-      'Gamification architecture (streaks, leagues, tasks, rooms)',
-      'Real-time features and database design',
-      'Responsive UI with modern component library',
+      'Photography portfolio showcase',
+      'Studio services overview',
+      'Contact and enquiry routes',
+      'Responsive layout',
     ],
-    techStack: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'Shadcn UI'],
-    tags: ['Web Apps', 'Full-Stack'],
+    tags: ['Business Websites', 'Portfolios'],
   },
   {
     id: 3,
-    name: 'Which AI Tool',
-    category: 'Web App',
-    subCategory: 'AI Integration',
-    liveLink: 'https://askwhichai.com',
-    oneLiner: 'Find the right AI tool by describing what you actually need — no filters, no endless scrolling.',
-    narrative: 'The AI tools space is overwhelming. Hundreds of tools, vague category labels, and no good way to find the right one for your specific task. Which AI Tool solves it differently: you describe what you\'re trying to do in plain language, and semantic search powered by OpenAI embeddings surfaces the most relevant tools for that exact job. No dropdowns. No manual filters. Just describe it and discover it.',
+    name: 'Warrior Fitness',
+    category: 'Business Websites',
+    subCategory: 'Fitness & Programmes',
+    url: 'https://warrior-fitness-xi.vercel.app/',
+    displayUrl: 'warrior-fitness-xi.vercel.app',
+    oneLiner: 'Fitness business website featuring training programmes, membership information, and external signup links.',
+    image: '/projects/warrior.png',
     handled: [
-      'AI-powered semantic search with OpenAI text-embeddings',
-      'Vector database design and indexing via Supabase',
-      'Full-stack build from idea to live product',
+      'Fitness programmes and training info',
+      'Membership and facility details',
+      'External signup links',
+      'Mobile-friendly layout',
     ],
-    techStack: ['Next.js', 'TypeScript', 'OpenAI Embeddings', 'Supabase', 'Shadcn UI', 'Semantic Search'],
-    tags: ['Web Apps', 'AI'],
-  },
-];
-
-const moreProjects = [
-  {
-    name: 'ICC Studios',
-    category: 'Landing Page',
-    subCategory: 'Photography',
-    headline: 'A photography site as striking as the work it shows.',
-    description: 'ICC Studios is a professional photography agency. Their website needed to stop visitors in their tracks — not just list services. We built a sleek, modern site with fluid animations, a carefully composed layout, and performance-optimized image delivery that lets the photography do exactly what it\'s supposed to: impress.',
-    tags: ['Next.js', 'Tailwind CSS', 'Framer Motion', 'Responsive Design'],
-    live: 'icc-delta.vercel.app',
-    filterTags: ['Landing Pages'],
+    tags: ['Business Websites'],
   },
   {
-    name: 'iSalesBook',
-    category: 'SaaS Landing Page',
-    subCategory: 'SEO',
-    headline: 'Built to rank on Google. Built to convert visitors.',
-    description: 'iSalesBook is a sales inventory SaaS app — and their landing page needed to work hard: pull in organic search traffic and turn curious visitors into sign-ups. We built a fully SEO-optimized, performance-tuned page with clean copywriting support, proper metadata architecture, and a conversion-focused layout.',
-    tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'SEO Optimization'],
-    live: 'isalesbook.com',
-    filterTags: ['Landing Pages'],
+    id: 4,
+    name: 'Risk & Audit Insights',
+    category: 'Blogs & CMS',
+    subCategory: 'Professional Publishing',
+    url: 'https://riskaai.com/',
+    displayUrl: 'riskaai.com',
+    oneLiner: 'Professional publishing website powered by Sanity CMS, featuring structured categories and archive.',
+    image: '/projects/riskaai.png',
+    handled: [
+      'Sanity CMS publishing',
+      'Content categories',
+      'Article archive',
+      'Responsive editorial reading experience',
+    ],
+    tags: ['Blogs & CMS'],
   },
   {
+    id: 5,
     name: 'The Emergence Porch',
-    category: 'Non-Profit Website',
-    subCategory: 'SEO',
-    headline: 'A digital home built to grow with the mission.',
-    description: 'The Emergence Porch helps young Nigerians find purpose, build clarity, and create impact. Their website needed to reflect the seriousness of that mission while being fully discoverable online. We built and maintain their site as volunteer in-house developers.',
-    tags: ['Next.js', 'SEO', 'Accessibility', 'Analytics', 'Performance'],
-    live: 'theemergenceporch.org',
-    filterTags: ['Landing Pages'],
+    category: 'Nonprofit Websites',
+    subCategory: 'Youth & Community Organisation',
+    url: 'https://theemergenceporch.org/',
+    displayUrl: 'theemergenceporch.org',
+    oneLiner: 'Nonprofit and community informational website presenting organisational clarity and get-involved paths.',
+    image: null,
+    handled: [
+      'Youth organisation informational website',
+      'Purpose and programmes overview',
+      'Community get-involved paths',
+      'Clean, text-led responsive layout',
+    ],
+    tags: ['Nonprofit Websites'],
   },
   {
-    name: 'Risk and Audit Insights',
-    category: 'Content Platform',
-    subCategory: 'Professional Services',
-    headline: 'Expert content — with an infrastructure built to match.',
-    description: 'A professional blog for risk management, compliance, and audit professionals. We built a headless CMS setup with Sanity that lets the team publish and edit freely, wrapped in a clean, typography-first design that takes the content seriously.',
-    tags: ['Next.js', 'Sanity CMS', 'Tailwind CSS', 'Shadcn UI'],
-    live: 'riskaai.com',
-    filterTags: ['Full-Stack'],
-  },
-  {
-    name: 'Cataleex',
-    category: 'Agency Website',
-    subCategory: 'Web3',
-    headline: 'A Web3 agency site that actually looks like it belongs in Web3.',
-    description: 'Cataleex is a Web3 marketing agency. Their audience is sharp-eyed, design-aware, and not easily impressed. We built a site with a bold, distinctive aesthetic that signals credibility to a Web3-native crowd without resorting to clichés.',
-    tags: ['Next.js', 'Web3', 'Modern UI', 'Custom Design'],
-    live: 'cataleex.vercel.app',
-    filterTags: ['Landing Pages'],
-  },
-  {
-    name: 'NFT Marketplace',
-    category: 'Figma-to-Code',
-    subCategory: 'Web3',
-    headline: 'Every pixel exactly where it belongs.',
-    description: 'A precise Figma-to-code implementation of a full NFT Marketplace interface — responsive across all screen sizes, with smooth transitions and animations that feel deliberate, not decorative.',
-    tags: ['Figma-to-Code', 'Animation', 'Responsive Design', 'Web3'],
-    live: 'nft-marketplace-zeta-weld.vercel.app',
-    filterTags: ['Landing Pages'],
-  },
-  {
-    name: 'Moonex',
-    category: 'Figma-to-Code',
-    subCategory: 'Web3',
-    headline: 'A Web3 landing page that holds up on every screen.',
-    description: 'Another pixel-perfect implementation — a crypto/DeFi landing page built directly from a detailed Figma spec. Full responsiveness, smooth motion, and clean code that stays maintainable long after delivery.',
-    tags: ['Figma-to-Code', 'Web3', 'Responsive Design', 'Animation'],
-    live: 'moonex-gules.vercel.app',
-    filterTags: ['Landing Pages'],
-  },
-  {
-    name: 'Ogundeji Ogunyemi Portfolio',
-    category: 'Portfolio Website',
-    subCategory: 'Personal Brand',
-    headline: 'A portfolio that makes the right first impression, every time.',
-    description: 'A thoughtfully designed personal portfolio site built to tell a professional story with clarity and confidence. Custom layout, purposeful motion design, and a structure that keeps the focus exactly where it belongs.',
-    tags: ['Next.js', 'Framer Motion', 'Custom Design'],
-    live: 'opeyemi-five.vercel.app',
-    filterTags: ['Landing Pages'],
+    id: 6,
+    name: 'Opeyemi Ogundeji',
+    category: 'Portfolios',
+    subCategory: 'Personal Professional Portfolio',
+    url: 'https://opeyemi-five.vercel.app/',
+    displayUrl: 'opeyemi-five.vercel.app',
+    oneLiner: 'Personal professional portfolio website showcasing profile focus, initiatives, and contact options.',
+    image: '/projects/opeyemi.png',
+    handled: [
+      'Professional portfolio website',
+      'Profile and career focus',
+      'Direct contact routes',
+      'Responsive design',
+    ],
+    tags: ['Portfolios'],
   },
 ];
-
 ---
 
-<Layout title="Our Work — Glickages">
+<Layout title="Selected Work — Glickages" description="Explore custom websites crafted by Glickages for businesses, organisations, and professionals.">
   <Header />
   <SocialSidebar />
   <main>
@@ -154,53 +121,26 @@ const moreProjects = [
     <section class="relative pt-32 pb-16 lg:pt-40 lg:pb-20">
       <div class="container-custom">
         <div class="animate-on-scroll">
-          <p class="text-[var(--accent-cyan)] text-sm font-medium uppercase tracking-widest mb-3">Our Work</p>
+          <p class="text-[var(--accent-cyan)] text-sm font-medium uppercase tracking-widest mb-3">Portfolio</p>
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-            Built With Care.<br />
-            <span class="text-[var(--accent-cyan)]">Shipped With Purpose.</span>
+            Selected Work.<br />
+            <span class="text-[var(--accent-cyan)]">Built With Purpose.</span>
           </h1>
           <p class="text-[var(--text-muted)] text-base md:text-lg max-w-2xl leading-relaxed">
-            From lean landing pages to full-stack platforms — here's a selection of what we've built for clients and the products we've made ourselves. Every project on this page is live, real, and built to actually work.
+            A curated selection of custom websites built for businesses and organisations. Every project below is live, responsive, and crafted around real client needs.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Stats Strip -->
-    <section class="py-8 border-y border-white/5">
-      <div class="container-custom">
-        <div class="flex flex-wrap items-center justify-center gap-6 md:gap-10 text-center animate-on-scroll">
-          <div>
-            <span class="text-[var(--accent-cyan)] text-2xl md:text-3xl font-bold">10+</span>
-            <span class="text-[var(--text-muted)] text-sm ml-2">Projects Shipped</span>
-          </div>
-          <span class="hidden md:block text-white/20">|</span>
-          <div>
-            <span class="text-[var(--accent-cyan)] text-2xl md:text-3xl font-bold">2+</span>
-            <span class="text-[var(--text-muted)] text-sm ml-2">Years Building</span>
-          </div>
-          <span class="hidden md:block text-white/20">|</span>
-          <div>
-            <span class="text-[var(--accent-cyan)] text-2xl md:text-3xl font-bold">8+</span>
-            <span class="text-[var(--text-muted)] text-sm ml-2">Happy Clients</span>
-          </div>
-          <span class="hidden md:block text-white/20">|</span>
-          <div>
-            <span class="text-[var(--accent-cyan)] text-2xl md:text-3xl font-bold">Nigeria</span>
-            <span class="text-[var(--text-muted)] text-sm ml-2">& Beyond</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Filter Tabs -->
-    <section class="py-8 sticky top-20 z-30 bg-black/90 backdrop-blur-md border-b border-white/5">
+    <section class="py-6 sticky top-20 z-30 bg-black/90 backdrop-blur-md border-y border-white/5">
       <div class="container-custom">
-        <div class="flex flex-wrap gap-3" id="filter-tabs">
+        <div class="flex flex-wrap gap-2.5" id="filter-tabs">
           {filters.map((filter, index) => (
-            <button 
+            <button
               data-filter={filter}
-              class={`filter-tab px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${index === 0 ? 'bg-[var(--accent-cyan)] text-white' : 'bg-white/5 text-[var(--text-muted)] hover:bg-white/10 hover:text-white'}`}
+              class={`filter-tab px-5 py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-300 ${index === 0 ? 'bg-[var(--accent-cyan)] text-white' : 'bg-white/5 text-[var(--text-muted)] hover:bg-white/10 hover:text-white'}`}
             >
               {filter}
             </button>
@@ -209,124 +149,80 @@ const moreProjects = [
       </div>
     </section>
 
-    <!-- Featured Projects -->
+    <!-- Projects Grid -->
     <section class="section-padding">
       <div class="container-custom">
-        <div class="mb-10 animate-on-scroll">
-          <p class="text-[var(--accent-cyan)] text-sm font-medium uppercase tracking-widest mb-2">Selected Projects</p>
-          <h2 class="text-2xl md:text-3xl font-bold text-white">Featured Work</h2>
-        </div>
-
-        <div class="space-y-12 lg:space-y-16" id="featured-projects">
-          {featuredProjects.map((project, index) => (
-            <div 
-              class="project-card group grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center animate-on-scroll"
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+          {projects.map((project) => (
+            <div
+              class="project-card group rounded-[22px] bg-white/[0.03] border border-white/5 overflow-hidden hover:border-[var(--accent-cyan)]/30 transition-all duration-500 flex flex-col animate-on-scroll"
               data-tags={project.tags.join(',')}
             >
-              <div class={`relative rounded-[20px] overflow-hidden ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                <div class="aspect-[16/10] bg-gradient-to-br from-[var(--bg-deep)] to-[var(--bg-blue)] flex items-center justify-center">
-                  <div class="text-center p-8">
-                    <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-[var(--accent-cyan)]/20 flex items-center justify-center">
-                      <span class="text-[var(--accent-cyan)] text-3xl font-bold">{project.name.charAt(0)}</span>
-                    </div>
-                    <p class="text-white font-semibold text-lg">{project.name}</p>
+              {project.image ? (
+                <div class="aspect-[16/10] overflow-hidden bg-[var(--bg-deep)] relative">
+                  <img
+                    src={project.image}
+                    alt={project.name}
+                    class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                </div>
+              ) : (
+                <div class="aspect-[16/10] bg-gradient-to-br from-[#021833] via-[#042852] to-[#011429] flex flex-col items-center justify-center p-6 text-center border-b border-white/5">
+                  <div class="w-14 h-14 rounded-2xl bg-[var(--accent-cyan)]/15 border border-[var(--accent-cyan)]/30 flex items-center justify-center text-[var(--accent-cyan)] mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  </div>
+                  <span class="text-white font-semibold text-lg">{project.name}</span>
+                  <span class="text-[var(--text-dim)] text-xs mt-1 uppercase tracking-wider">{project.subCategory}</span>
+                </div>
+              )}
+
+              <div class="p-6 md:p-7 flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="px-2.5 py-0.5 rounded-full bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] text-xs font-medium">
+                      {project.category}
+                    </span>
+                    <span class="text-white/20">·</span>
+                    <span class="text-[var(--text-muted)] text-xs">{project.subCategory}</span>
+                  </div>
+
+                  <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[var(--accent-cyan)] transition-colors">
+                    {project.name}
+                  </h3>
+
+                  <p class="text-[var(--text-muted)] text-sm leading-relaxed mb-4">
+                    {project.oneLiner}
+                  </p>
+
+                  <div class="mb-5 pt-3 border-t border-white/5">
+                    <p class="text-[var(--text-dim)] text-xs uppercase tracking-wider font-semibold mb-2">Key Areas</p>
+                    <ul class="space-y-1.5">
+                      {project.handled.map(item => (
+                        <li class="text-[var(--text-muted)] text-xs flex items-start gap-2">
+                          <span class="text-[var(--accent-cyan)] mt-0.5">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-              </div>
-              
-              <div class={index % 2 === 1 ? 'lg:order-1' : ''}>
-                <div class="flex items-center gap-2 mb-4">
-                  <span class="px-3 py-1 rounded-full bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] text-xs font-medium">{project.category}</span>
-                  <span class="text-white/30">·</span>
-                  <span class="text-[var(--text-muted)] text-xs">{project.subCategory}</span>
-                </div>
-                <h3 class="text-2xl md:text-3xl font-bold text-white mb-3">{project.name}</h3>
-                <p class="text-[var(--text-muted)] text-sm mb-4 leading-relaxed">{project.oneLiner}</p>
-                <p class="text-[var(--text-dim)] text-sm leading-relaxed mb-6">{project.narrative}</p>
-                
-                <div class="mb-6">
-                  <p class="text-white text-sm font-medium mb-2">What we handled:</p>
-                  <ul class="space-y-1">
-                    {project.handled.map(item => (
-                      <li class="text-[var(--text-muted)] text-sm flex items-start gap-2">
-                        <span class="text-[var(--accent-cyan)] mt-1">•</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
 
-                <div class="flex flex-wrap gap-2 mb-6">
-                  {project.techStack.map(tech => (
-                    <span class="px-3 py-1 rounded-full bg-white/5 text-[var(--text-muted)] text-xs border border-white/5">{tech}</span>
-                  ))}
-                </div>
-
-                {project.liveLink ? (
-                  <a 
-                    href={project.liveLink} 
-                    target="_blank" 
+                <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+                  <a
+                    href={project.url}
+                    target="_blank"
                     rel="noopener noreferrer"
-                    class="inline-flex items-center gap-2 text-[var(--accent-cyan)] font-medium hover:text-[var(--accent-bright)] transition-colors group"
+                    class="inline-flex items-center gap-2 text-xs md:text-sm font-medium text-[var(--accent-cyan)] hover:text-[var(--accent-bright)] transition-colors group/link"
                   >
-                    Visit Live Site
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    <span>Visit Live Site</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                   </a>
-                ) : (
-                  <span class="inline-flex items-center gap-2 text-[var(--text-dim)] text-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    Private Client Deployment
+                  <span class="text-[var(--text-dim)] text-xs truncate max-w-[130px] hidden sm:inline" title={project.displayUrl}>
+                    {project.displayUrl}
                   </span>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- More Work -->
-    <section class="section-padding bg-[var(--bg-dark)]">
-      <div class="container-custom">
-        <div class="mb-10 animate-on-scroll">
-          <p class="text-[var(--accent-cyan)] text-sm font-medium uppercase tracking-widest mb-2">More Work</p>
-          <h2 class="text-2xl md:text-3xl font-bold text-white">The Complete Project Grid</h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="more-projects">
-          {moreProjects.map((project) => (
-            <div 
-              class="project-card group rounded-[20px] bg-white/[0.03] border border-white/5 overflow-hidden hover:border-[var(--accent-cyan)]/30 transition-all duration-500 animate-on-scroll"
-              data-tags={project.filterTags.join(',')}
-            >
-              <div class="aspect-[16/10] bg-gradient-to-br from-[var(--bg-deep)] to-[var(--bg-blue)] flex items-center justify-center">
-                <div class="text-center p-6">
-                  <span class="text-[var(--accent-cyan)] text-4xl font-bold">{project.name.charAt(0)}</span>
                 </div>
-              </div>
-              <div class="p-6">
-                <div class="flex items-center gap-2 mb-3">
-                  <span class="px-2 py-0.5 rounded-full bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] text-xs font-medium">{project.category}</span>
-                  <span class="text-white/30">·</span>
-                  <span class="text-[var(--text-muted)] text-xs">{project.subCategory}</span>
-                </div>
-                <h3 class="text-white font-semibold text-lg mb-2">{project.headline}</h3>
-                <p class="text-[var(--text-muted)] text-sm leading-relaxed mb-4">{project.description}</p>
-                <div class="flex flex-wrap gap-1.5 mb-4">
-                  {project.tags.map(tag => (
-                    <span class="px-2 py-0.5 rounded-full bg-white/5 text-[var(--text-dim)] text-xs">{tag}</span>
-                  ))}
-                </div>
-                <a 
-                  href={`https://${project.live}`} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center gap-1.5 text-[var(--accent-cyan)] text-sm hover:text-[var(--accent-bright)] transition-colors group/link"
-                >
-                  {project.live}
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                </a>
               </div>
             </div>
           ))}
@@ -335,28 +231,30 @@ const moreProjects = [
     </section>
 
     <!-- Closing CTA -->
-    <section class="section-padding">
+    <section class="section-padding bg-[var(--bg-dark)]">
       <div class="container-custom">
         <div class="relative rounded-[24px] overflow-hidden bg-gradient-to-br from-[var(--bg-deep)] to-[var(--bg-blue)] p-8 md:p-12 lg:p-16 animate-on-scroll">
           <div class="absolute top-0 right-0 w-64 h-64 bg-[var(--accent-cyan)]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
           <div class="absolute bottom-0 left-0 w-64 h-64 bg-[var(--accent-cyan)]/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
-          
+
           <div class="relative z-10 text-center max-w-2xl mx-auto">
             <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-              See Something That Looks Like What You Need?
+              Need a Website for Your Business?
             </h2>
             <p class="text-[var(--text-muted)] text-base md:text-lg mb-8 leading-relaxed">
-              Good. That's the point. If you've got a project in mind — big, small, or still taking shape — let's have a conversation about it.
+              Let's talk about what you want to build. From brand-specific landing pages to full informational sites and content management, we're ready to help.
             </p>
-            <a 
-              href={contactLinks.email} 
+            <a
+              href={contactLinks.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
               class="inline-flex items-center gap-2 px-8 py-4 bg-[var(--accent-cyan)] text-white rounded-full font-medium hover:bg-[var(--accent-bright)] transition-all duration-300 group"
             >
-              Start a Project
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              Chat on WhatsApp
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
             </a>
             <p class="mt-4 text-[var(--text-dim)] text-sm">
-              Or <a href="/#services" class="text-[var(--accent-cyan)] hover:underline">view all services</a> to see exactly what we do.
+              Or explore our <a href="/#services" class="text-[var(--accent-cyan)] hover:underline">core services</a>.
             </p>
           </div>
         </div>
@@ -368,14 +266,12 @@ const moreProjects = [
 
 <script>
   const tabs = document.querySelectorAll<HTMLButtonElement>('.filter-tab');
-  const featuredCards = document.querySelectorAll<HTMLElement>('#featured-projects .project-card');
-  const moreCards = document.querySelectorAll<HTMLElement>('#more-projects .project-card');
-  const allCards = [...featuredCards, ...moreCards];
+  const projectCards = document.querySelectorAll<HTMLElement>('#projects-grid .project-card');
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const filter = tab.dataset.filter ?? '';
-      
+
       tabs.forEach(t => {
         t.classList.remove('bg-[var(--accent-cyan)]', 'text-white');
         t.classList.add('bg-white/5', 'text-[var(--text-muted)]');
@@ -383,11 +279,10 @@ const moreProjects = [
       tab.classList.remove('bg-white/5', 'text-[var(--text-muted)]');
       tab.classList.add('bg-[var(--accent-cyan)]', 'text-white');
 
-      allCards.forEach(card => {
-        const tags = card.dataset.tags || '';
+      projectCards.forEach(card => {
+        const tags = (card.dataset.tags || '').split(',');
         if (filter === 'All' || tags.includes(filter)) {
           card.style.display = '';
-          card.classList.add('animate-on-scroll');
         } else {
           card.style.display = 'none';
         }
@@ -395,6 +290,3 @@ const moreProjects = [
     });
   });
 </script>
-
-
-
